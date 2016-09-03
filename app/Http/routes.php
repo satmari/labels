@@ -15,10 +15,15 @@
 
 Route::get('/', 'HomeController@index');
 
-// CBlabels
+// CBlabels - scann BB and print CB labels
 Route::get('/cblabels', 'ControllerCBlabels@searchininteos');
-Route::get('/searchinteos', 'ControllerCBlabels@searchinteos');
+// Route::get('/searchinteos', 'ControllerCBlabels@searchinteos');
 Route::post('/searchinteos_store', 'ControllerCBlabels@searchinteos_store');
+
+// CBlabel - scann CB and print ONE CB label
+Route::get('/cblabel', 'ControllerCBlabel@searchininteos');
+// Route::get('/searchinteos', 'ControllerCBlabel@searchinteos');
+Route::post('/searchinteos_store_one', 'ControllerCBlabel@searchinteos_store_one');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -10,40 +10,40 @@ use Illuminate\Support\Facades\Redirect;
 use App\CBLabels;
 use DB;
 
-class ControllerCBlabels extends Controller {
+class ControllerCBlabel extends Controller {
 
 	/**
-	 * Print labels by scanning BB
+	 * Print label by scanning CB
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
 		//
-		return view('cblabels.index');
+		return view('cblabel.index');
 	}
 
 	public function searchininteos() 
 	{
 		//
 		try {
-			return view('cblabels.searchinteos');
+			return view('cblabel.searchinteos');
 		}
 		catch (\Illuminate\Database\QueryException $e) {
-			return view('cblabels.searchinteos');
+			return view('cblabel.searchinteos');
 		}
 	}
 
-	public function searchinteos_store(Request $request) 
+	public function searchinteos_store_one(Request $request) 
 	{
 		//
 		//
-		$this->validate($request, ['bb_code' => 'required']);
+		$this->validate($request, ['cb_code' => 'required']);
 		$input = $request->all(); // change use (delete or comment user Requestl; )
 
-		//1717281
-		$bbcode = $input['bb_code'];
-		// dd($bbcode);
+		//
+		$cbcode = $input['cb_code'];
+		// dd($cbcode);
 		
 		$msg = '';
 		$msg1 = '';
@@ -52,44 +52,33 @@ class ControllerCBlabels extends Controller {
 		// Live database
 		try {
 			
-			// Inteos - number of labels
-			$inteos_count = DB::connection('sqlsrv2')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZG].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
-					'somevariable' => $bbcode
-			));
-
 			// Inteos - box information
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
-				bb.INTKEY, 
+				bb.INTKEY,
 				bb.BlueBoxNum,
 				st.StyCod,
 				sku.Variant
-				FROM            dbo.CNF_BlueBox AS bb 
-				LEFT OUTER JOIN     dbo.CNF_PO AS po ON bb.IntKeyPO = po.INTKEY 
-				LEFT OUTER JOIN     dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
-				LEFT OUTER JOIN     dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+				FROM            dbo.CNF_CartonBox AS cb 
+				LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
+				LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
+				LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
+				LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
+				
+				WHERE			cb.BoxNum = :somevariable
 
-				WHERE			bb.[INTKEY] = :somevariable
-
-				GROUP BY		bb.INTKEY, 
+				GROUP BY		bb.INTKEY,
 								bb.BlueBoxNum,
 								st.StyCod,
 								sku.Variant"
 				), array(
-					'somevariable' => $bbcode
+					'somevariable' => $cbcode
 			));
 
-			if ($inteos_count) {
+			if ($inteos) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find CB in Inteos for this BB, NE POSTOJI KARTONSKA KUTIJA ZA OVU PLAVU KUTIJU U INTEOSU !';
-	        	return view('cblabels.error', compact('msg'));
-	    	}
-
-	    	if ($inteos) {
-				//continue
-			} else {
-	        	$msg = 'Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !';
-	        	return view('cblabels.error', compact('msg'));
+	        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU !';
+	        	return view('cblabel.error', compact('msg'));
 	    	}
 
 			function object_to_array($data)
@@ -106,10 +95,8 @@ class ControllerCBlabels extends Controller {
 			    return $data;
 			}
 		
-	    	$inteos_array_count = object_to_array($inteos_count);
-	    	$qty_to_print = $inteos_array_count[0]['count'];
-
 	    	$inteos_array = object_to_array($inteos);
+
 	    	$bbcode = $inteos_array[0]['INTKEY'];
 	    	$bb = $inteos_array[0]['BlueBoxNum'];
 	    	$style = $inteos_array[0]['StyCod'];
@@ -140,10 +127,12 @@ class ControllerCBlabels extends Controller {
 	    	$barcode = $cartiglio_array[0]['Cod_Bar'];
 	    	$barcode_3 = substr($cartiglio_array[0]['Cod_Bar'], -3, 3);
 	    	// dd($barcode_3);
+
 	    	$color_desc = $cartiglio_array[0]['Descr_Col_CZ'];
 
 	    	$printer_name = 'Krojacnica';
 	    	$printed = 0;
+	    	$qty_to_print = 1;
 
 	    	// Record Labels
 			try {
@@ -183,6 +172,4 @@ class ControllerCBlabels extends Controller {
 			
 		return Redirect::to('/');
 	}
-	
-
 }

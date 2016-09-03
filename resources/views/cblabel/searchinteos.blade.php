@@ -5,17 +5,17 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Find BB and print CB labels</div>
+                <div class="panel-heading">Find CB and print ONE label</div>
                 
-                {!! Form::open(['url' => 'searchinteos_store']) !!}
+                {!! Form::open(['url' => 'searchinteos_store_one']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="panel-body">
-                    {!! Form::input('number', 'bb_code', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+                    {!! Form::input('number', 'cb_code', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::submit('Find BB', ['class' => 'btn btn-success btn-lg center-block']) !!}
+                    {!! Form::submit('Find CB', ['class' => 'btn btn-primary btn-lg center-block']) !!}
                 </div>
 
                 @include('errors.list')

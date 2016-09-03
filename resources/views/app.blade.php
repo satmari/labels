@@ -36,7 +36,10 @@
 					<li><a href="{{ url('/') }}">Home</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/cblabels') }}">CB Labels</a></li>
+					<li><a href="{{ url('/cblabels') }}">Scann BB and print CB labels</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
 				</ul>
 
 			<!--
