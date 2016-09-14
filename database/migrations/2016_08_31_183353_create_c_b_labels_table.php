@@ -16,7 +16,7 @@ class CreateCBLabelsTable extends Migration {
 		{
 			$table->increments('id');
 
-			$table->integer('bbcode')->nullable();
+			$table->string('bbcode')->nullable();
 			$table->string('bb')->nullable();
 
 			$table->string('style');

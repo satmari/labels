@@ -25,6 +25,10 @@ Route::get('/cblabel', 'ControllerCBlabel@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabel@searchinteos');
 Route::post('/searchinteos_store_one', 'ControllerCBlabel@searchinteos_store_one');
 
+// Printer
+Route::get('/printer', 'HomeController@printer');
+Route::post('/printer_set', 'HomeController@printer_set');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

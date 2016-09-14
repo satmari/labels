@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use App\CBLabels;
 use DB;
 
+use Session;
+
 class ControllerCBlabel extends Controller {
 
 	/**
@@ -105,6 +107,7 @@ class ControllerCBlabel extends Controller {
 	    	list($color, $size) = explode('-', $variant);
 	    	// dd($size);
 
+	    	$size_to_search = str_replace("/","-",$size);
 	    	// Cartiglio
 
 	    	$cartiglio = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Cod_Bar]
@@ -113,13 +116,13 @@ class ControllerCBlabel extends Controller {
 		      ,[Tgl_EUR]
 		      ,[Descr_Col_CZ]
 				FROM [finalaudit].[dbo].[cartiglio]
-				WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_EUR] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size
+				WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_EUR] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size_to_search
 			));
 
 			if ($cartiglio) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find SKU in Cartiglio DB, NE POSTOJI SKU IN CARTIGLIO DB !!!';
+	        	$msg = 'Cannot find SKU in Cartiglio DB, NE POSTOJI SKU U CARTIGLIO DB !!! ZOVI ODMAH IT SEKTOR!';
 	        	return view('cblabels.error', compact('msg'));
 	    	}
 
@@ -130,7 +133,9 @@ class ControllerCBlabel extends Controller {
 
 	    	$color_desc = $cartiglio_array[0]['Descr_Col_CZ'];
 
-	    	$printer_name = 'Krojacnica';
+	    	$printer_name = Session::get('printer_name');
+	    	// $printer_name = 'SBT-WP01';
+	    	
 	    	$printed = 0;
 	    	$qty_to_print = 1;
 

@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::submit('Find CB', ['class' => 'btn btn-primary btn-lg center-block']) !!}
+                    {!! Form::submit('Find CB', ['class' => 'btn btn-success btn-lg center-block']) !!}
                 </div>
 
                 @include('errors.list')

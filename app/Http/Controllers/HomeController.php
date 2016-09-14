@@ -1,5 +1,15 @@
 <?php namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Auth\Authenticatable;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+
+use Session;
+
+
 class HomeController extends Controller {
 
 	/*
@@ -29,8 +39,33 @@ class HomeController extends Controller {
 	 * @return Response
 	 */
 	public function index()
-	{
-		return view('home');
+	{	
+		$printer_name = Session::get('printer_name');
+		
+		// dd($printer_name);
+
+		if ($printer_name != NULL) {
+			return view('home', compact('printer_name'));	
+		} else {
+			return view('home');
+		}
+
+	}
+	public function printer()
+	{	
+		return view('printer');
+	}
+
+	public function printer_set(Request $request)
+	{	
+		$this->validate($request, ['printer_name'=>'required']);
+
+		$p = $request->all(); 
+		$printer_name = $p['printer_name'];
+
+		Session::set('printer_name', $printer_name );
+
+		return redirect('/');
 	}
 
 }

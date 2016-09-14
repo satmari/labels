@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 use App\CBLabels;
 use DB;
 
+use Session;
+
 class ControllerCBlabels extends Controller {
 
 	/**
@@ -52,11 +54,6 @@ class ControllerCBlabels extends Controller {
 		// Live database
 		try {
 			
-			// Inteos - number of labels
-			$inteos_count = DB::connection('sqlsrv2')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZG].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
-					'somevariable' => $bbcode
-			));
-
 			// Inteos - box information
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
 				bb.INTKEY, 
@@ -77,22 +74,28 @@ class ControllerCBlabels extends Controller {
 				), array(
 					'somevariable' => $bbcode
 			));
+			// dd($inteos);
 
-			if ($inteos_count) {
-				//continue
-			} else {
-	        	$msg = 'Cannot find CB in Inteos for this BB, NE POSTOJI KARTONSKA KUTIJA ZA OVU PLAVU KUTIJU U INTEOSU !';
-	        	return view('cblabels.error', compact('msg'));
-	    	}
-
-	    	if ($inteos) {
+			if ($inteos) {
 				//continue
 			} else {
 	        	$msg = 'Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !';
 	        	return view('cblabels.error', compact('msg'));
 	    	}
 
-			function object_to_array($data)
+			// Inteos - number of labels
+			$inteos_count = DB::connection('sqlsrv2')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZG].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
+					'somevariable' => $bbcode
+			));
+
+			if ($inteos_count != 0) {
+				//continue
+			} else {
+	        	$msg = 'Cannot find CB in Inteos for this BB, NE POSTOJI KARTONSKA KUTIJA VEZANA ZA OVU PLAVU KUTIJU U INTEOSU !';
+	        	return view('cblabels.error', compact('msg'));
+	    	}
+
+	    	function object_to_array($data)
 			{
 			    if (is_array($data) || is_object($data))
 			    {
@@ -118,6 +121,7 @@ class ControllerCBlabels extends Controller {
 	    	list($color, $size) = explode('-', $variant);
 	    	// dd($size);
 
+	    	$size_to_search = str_replace("/","-",$size);
 	    	// Cartiglio
 
 	    	$cartiglio = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Cod_Bar]
@@ -126,13 +130,13 @@ class ControllerCBlabels extends Controller {
 		      ,[Tgl_EUR]
 		      ,[Descr_Col_CZ]
 				FROM [finalaudit].[dbo].[cartiglio]
-				WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_EUR] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size
+				WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_EUR] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size_to_search
 			));
 
 			if ($cartiglio) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find SKU in Cartiglio DB, NE POSTOJI SKU IN CARTIGLIO DB !!!';
+	        	$msg = 'Cannot find SKU in Cartiglio DB, NE POSTOJI SKU U CARTIGLIO DB !!! ZOVI ODMAH IT SEKTOR!';
 	        	return view('cblabels.error', compact('msg'));
 	    	}
 
@@ -142,7 +146,8 @@ class ControllerCBlabels extends Controller {
 	    	// dd($barcode_3);
 	    	$color_desc = $cartiglio_array[0]['Descr_Col_CZ'];
 
-	    	$printer_name = 'Krojacnica';
+	    	$printer_name = Session::get('printer_name');
+	    	// $printer_name = 'SBT-WP01';
 	    	$printed = 0;
 
 	    	// Record Labels
@@ -172,7 +177,7 @@ class ControllerCBlabels extends Controller {
 			}
 	    }
 		catch (\Illuminate\Database\QueryException $e) {
-			$msg = "Problem to save in cblabel table. try agan.";
+			$msg = "Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !";
 			return view('cblabels.error',compact('msg'));
 		}
 		/*
