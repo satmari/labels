@@ -27,7 +27,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="http://172.27.161.173/labels/"><b>Labels application</b></a>
+				<a class="navbar-brand" href="http://172.27.73.173/labels/"><b>Labels application</b></a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

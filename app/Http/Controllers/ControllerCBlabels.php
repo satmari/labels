@@ -147,6 +147,13 @@ class ControllerCBlabels extends Controller {
 	    	$color_desc = $cartiglio_array[0]['Descr_Col_CZ'];
 
 	    	$printer_name = Session::get('printer_name');
+
+	    	if ($printer_name != NULL) {
+				//continue
+			} else {
+				$msg = 'Printer must be selected, PRINTER MORA BITI SLEKTOVAN!';
+	        	return view('cblabels.error', compact('msg'));
+			}
 	    	// $printer_name = 'SBT-WP01';
 	    	$printed = 0;
 
