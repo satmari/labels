@@ -51,6 +51,14 @@ class ControllerCBlabel extends Controller {
 		$msg1 = '';
 		//$msg2 = '';
 
+		$printer_name = Session::get('printer_name');
+    	if ($printer_name != NULL) {
+			//continue
+		} else {
+			$msg = 'Printer must be selected, PRINTER MORA BITI SLEKTOVAN!';
+        	return view('cblabels.error', compact('msg'));
+		}
+			
 		// Live database
 		try {
 			
@@ -113,10 +121,14 @@ class ControllerCBlabel extends Controller {
 	    	$cartiglio = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Cod_Bar]
 		      ,[Cod_Art_CZ]
 		      ,[Cod_Col_CZ]
+		      ,[Tgl_ITA]
+		      ,[Tgl_ENG]
+		      ,[Tgl_SPA]
 		      ,[Tgl_EUR]
+		      ,[Tgl_USA]
 		      ,[Descr_Col_CZ]
 				FROM [finalaudit].[dbo].[cartiglio]
-				WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_EUR] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size_to_search
+				WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_ITA] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size_to_search
 			));
 
 			if ($cartiglio) {
@@ -133,7 +145,12 @@ class ControllerCBlabel extends Controller {
 
 	    	$color_desc = $cartiglio_array[0]['Descr_Col_CZ'];
 
-	    	$printer_name = Session::get('printer_name');
+	    	$size_ita = $cartiglio_array[0]['Tgl_ITA'];
+	    	$size_eng = $cartiglio_array[0]['Tgl_ENG'];
+	    	$size_spa = $cartiglio_array[0]['Tgl_SPA'];
+	    	$size_eur = $cartiglio_array[0]['Tgl_EUR'];
+	    	$size_usa = $cartiglio_array[0]['Tgl_USA'];
+
 	    	// $printer_name = 'SBT-WP01';
 	    	
 	    	$printed = 0;
@@ -149,7 +166,12 @@ class ControllerCBlabel extends Controller {
 				$table->style = $style;
 				$table->color = $color;
 				$table->color_desc = $color_desc;
-				$table->size = $size;
+
+				$table->size_ita = $size_ita;
+				$table->size_eng = $size_eng;
+				$table->size_spa = $size_spa;
+				$table->size_eur = $size_eur;
+				$table->size_usa = $size_usa;
 
 				$table->qty_to_print = $qty_to_print;
 				$table->barcode = $barcode;
