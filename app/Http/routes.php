@@ -20,6 +20,13 @@ Route::get('/cblabels', 'ControllerCBlabels@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabels@searchinteos');
 Route::post('/searchinteos_store', 'ControllerCBlabels@searchinteos_store');
 
+// CBExtralabel
+Route::get('/cbextralabels', 'ControllerCBExtralabels@searchininteos');
+// Route::get('/searchinteos', 'ControllerCBExtralabels@searchinteos');
+Route::post('/searchinteos_store_extra', 'ControllerCBExtralabels@searchinteos_store_extra');
+Route::post('/checkbox_store', 'ControllerCBExtralabels@checkbox_store');
+Route::post('/typeqty_store', 'ControllerCBExtralabels@typeqty_store');
+
 // CBlabel - scann CB and print ONE CB label
 Route::get('/cblabel', 'ControllerCBlabel@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabel@searchinteos');
@@ -33,3 +40,4 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
