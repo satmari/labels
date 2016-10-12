@@ -19,7 +19,7 @@ class CreateCBExtralabelsTable extends Migration {
 			$table->string('po')->nullable();
 			$table->string('bb_3')->nullable();
 
-			$table->string('bagno');
+			$table->string('bagno')->nullable();
 
 			$table->string('style');
 			$table->string('color');
@@ -40,6 +40,7 @@ class CreateCBExtralabelsTable extends Migration {
 			$table->tinyInteger('extrabb')->nullable();
 			$table->tinyInteger('readybb')->nullable();
 
+			$table->string('date')->nullable();
 			$table->string('printer_name');
 			$table->tinyInteger('printed');
 

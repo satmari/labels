@@ -27,21 +27,17 @@
                 {!!Form::hidden('bb_qty', $bb_qty) !!}
                 {!!Form::hidden('printer_name', $printer_name) !!}
                 
-                <table>
-                        <!-- <th> -->
-                        <div class="col-md-6">
-                            <b>Extra BB</b>
-                            {!! Form::checkbox('extrabb', 1 , null, ['id' => 'check', 'class' => 'form-control']); !!}
-                        </div>
-                        <!-- </th> -->
-                        <!-- <th> -->
-                        <div class="col-md-6">
-                            <b>Ready BB</b>
-                            {!! Form::checkbox('readybb', 1 ,null , ['id' => 'check', 'class' => 'form-control']); !!}
-                        </div>
-                        <!-- </th> -->
-                </table>
-
+                <table class="table">
+                    <tr>
+                        <td><p class="vertical-align: middle;">Extra BB: </p></td>
+                        <td>{!! Form::checkbox('extrabb', 1 , null, ['id' => 'check', 'class' => 'form-control']); !!}</td>
+                    </tr>
+                    <tr>
+                        <td><p class="vertical-align: middle;">Ready BB  </p></td>
+                        <td>{!! Form::checkbox('readybb', 1 ,null , ['id' => 'check', 'class' => 'form-control']); !!}</td>
+                    </tr>
+                 </table>
+                    
                 <br>
                 <br>
                 <br>

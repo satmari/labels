@@ -67,7 +67,7 @@ class ControllerCBExtralabels extends Controller {
 				bb.INTKEY, 
 				bb.BlueBoxNum,
 				bb.Bagno,
-				bb.Produced,
+				bb.BoxQuant,
 				st.StyCod,
 				sku.Variant
 				FROM            dbo.CNF_BlueBox AS bb 
@@ -80,7 +80,7 @@ class ControllerCBExtralabels extends Controller {
 				GROUP BY		bb.INTKEY, 
 								bb.BlueBoxNum,
 								bb.Bagno,
-								bb.Produced,
+								bb.BoxQuant,
 								st.StyCod,
 								sku.Variant"
 				), array(
@@ -174,7 +174,6 @@ class ControllerCBExtralabels extends Controller {
 
 	    	// Record Labels
 			try {
-				/*
 				$table = new CBlabels;
 
 				$table->bbcode = $bbcode;
@@ -198,7 +197,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->printed = $printed;
 				
 				$table->save();
-				*/
+
 			}
 			catch (\Illuminate\Database\QueryException $e) {
 				$msg = "Problem to save cb label in table";
@@ -227,7 +226,7 @@ class ControllerCBExtralabels extends Controller {
 			$size_spa;
 			$size_eng;
 
-			$bb_qty = $inteos_array[0]['Produced'];
+			$bb_qty = $inteos_array[0]['BoxQuant'];
 
 			return view('cbextralabels.checkbox',compact('po','bb_3','bagno','style','color','color_desc','size_ita','size_eng','size_spa',
 				'size_eur','size_usa','bb_qty','printer_name'));
@@ -315,6 +314,8 @@ class ControllerCBExtralabels extends Controller {
 		$extrabb = $input['extrabb'];
 		$readybb = $input['readybb'];
 
+		$date = date("d.m.Y");
+
 		for ($i=1; $i <= $no_of_box ; $i++) { 
 			$boxqty[] = $input['boxqty'.$i];
 		}
@@ -359,6 +360,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->extrabb = 0;
 				$table->readybb = $readybb;
 				
+				$table->date = $date;
 				$table->printer_name = $printer_name;
 				$table->printed = 0;
 				
@@ -369,8 +371,6 @@ class ControllerCBExtralabels extends Controller {
 				$msg = "Problem to save cb extra label in table";
 				return view('cbextralabels.error',compact('msg'));
 			}
-
-
 		}
 
 		if ($extrabb == 1) {
@@ -382,7 +382,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->po = $po;
 				$table->bb_3 = $bb_3;
 
-				$table->bagno = $bagno;
+				$table->bagno;
 
 				$table->style = $style;
 				$table->color = $color;
@@ -396,13 +396,14 @@ class ControllerCBExtralabels extends Controller {
 
 				$table->qty_to_print = 1;
 				$table->bb_qty = $bb_qty;
-				$table->physical_qty = $sum;
+				$table->physical_qty;
 
-				$table->no_of_box = $no_of_box;
+				$table->no_of_box;
 
 				$table->extrabb = $extrabb;
-				$table->readybb = $readybb;
+				$table->readybb;
 				
+				$table->date = $date;
 				$table->printer_name = $printer_name;
 				$table->printed = 0;
 				

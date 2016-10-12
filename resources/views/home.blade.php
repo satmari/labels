@@ -21,7 +21,7 @@
 				<br><br>
 				<div class="panel-body">
 					<div class="">
-						<a href="{{url('/cblabels')}}" class="btn btn-primary  center-block"><br>Skeniraj BlueBox i stampaj CartonBox nalepnice<br><br></a>
+						<a href="{{url('/cbextralabels')}}" class="btn btn-primary  center-block"><br>Skeniraj BlueBox i stampaj CartonBox nalepnice<br><br></a>
 					</div>
 				</div>
 				<br><br><br>

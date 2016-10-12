@@ -35,7 +35,7 @@
 					<li><a href="{{ url('/printer') }}">Choose printer</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/cblabels') }}">Scann BB and print CB labels</a></li>
+					<li><a href="{{ url('/cbextralabels') }}">Scann BB and print CB labels</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
