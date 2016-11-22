@@ -285,6 +285,7 @@ class ControllerCBExtralabels extends Controller {
 		}
 
 		$sugested_qty = intval($input['bb_qty']) / $no_of_box;
+		$sugested_qty = round($sugested_qty);
 		
 		return view('cbextralabels.typeqty',compact('po','bb_3','bagno','style','color','color_desc','size_ita','size_eng','size_spa',
 				'size_eur','size_usa','bb_qty','printer_name','no_of_box','extrabb','readybb','sugested_qty'));

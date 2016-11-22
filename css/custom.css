@@ -3,7 +3,7 @@ body {
 }
 .navbar-default {
     border-color: #c3861c !important;
-    background-image: linear-gradient(rgba(249, 238, 164, 0.3), rgba(254, 255, 253, 0.37) 60%, rgba(208, 193, 141, 0.61)) !important;
+    background-image: linear-gradient(rgba(249, 238, 164, 0.3), rgba(254, 255, 253, 0.37) 60%, rgba(187, 187, 187, 0.61)) !important;
 }
 title {
 	font-weight: bold;
