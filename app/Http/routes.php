@@ -36,6 +36,14 @@ Route::post('/searchinteos_store_one', 'ControllerCBlabel@searchinteos_store_one
 Route::get('/printer', 'HomeController@printer');
 Route::post('/printer_set', 'HomeController@printer_set');
 
+// Packing list labels
+Route::get('/selectinbound', 'ControllerPackingList@selectinbound');
+Route::post('/selectinbound_post', 'ControllerPackingList@selectinbound_post');
+Route::post('/selectbatch_post/{inbound}', 'ControllerPackingList@selectbatch_post');
+Route::get('/deleteinbound/{inbound}', 'ControllerPackingList@deleteinbound');
+Route::get('/deleteall', 'ControllerPackingList@deleteall');
+
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',

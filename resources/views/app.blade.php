@@ -40,6 +40,10 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/selectinbound') }}">Print from Inbound</a></li>
+				</ul>
+
 
 			<!--
 				<ul class="nav navbar-nav navbar-right">
