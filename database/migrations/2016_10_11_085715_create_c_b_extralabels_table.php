@@ -38,6 +38,7 @@ class CreateCBExtralabelsTable extends Migration {
 			$table->integer('no_of_box')->nullable();
 
 			$table->tinyInteger('extrabb')->nullable();
+			$table->tinyInteger('groupextrabb')->nullable();
 			$table->tinyInteger('readybb')->nullable();
 
 			$table->string('date')->nullable();

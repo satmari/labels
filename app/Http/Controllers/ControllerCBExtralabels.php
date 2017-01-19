@@ -331,6 +331,12 @@ class ControllerCBExtralabels extends Controller {
 			$boxqty[] = $sum;
 		}
 
+		if ($extrabb == 1) {
+			$groupextrabb = 1;
+		} else {
+			$groupextrabb = 0;
+		}
+
 		foreach ($boxqty as $box => $qty) {
 			
 			try {
@@ -359,6 +365,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->no_of_box = $no_of_box;
 
 				$table->extrabb = 0;
+				$table->groupextrabb = $groupextrabb;
 				$table->readybb = $readybb;
 				
 				$table->date = $date;
@@ -402,6 +409,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->no_of_box;
 
 				$table->extrabb = $extrabb;
+				$table->groupextrabb = $groupextrabb;
 				$table->readybb;
 				
 				$table->date = $date;
