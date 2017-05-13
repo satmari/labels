@@ -5,9 +5,9 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Find BB and print CB labels</div>
+                <div class="panel-heading">Find BB and print CB extra labels</div>
                 
-                {!! Form::open(['url' => 'searchinteos_store']) !!}
+                {!! Form::open(['url' => 'searchinteos_store_extra']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="panel-body">

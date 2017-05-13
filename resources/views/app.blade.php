@@ -7,9 +7,8 @@
 	<title>Labels</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
-
-	<!-- Fonts -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,16 +27,23 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">Labels</a>
+				<a class="navbar-brand" href="http://172.27.161.173/labels/"><b>Labels application</b></a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/printer') }}">Choose printer</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/cblabels') }}">CB Labels</a></li>
+					<li><a href="{{ url('/cbextralabels') }}">Scann BB and print CB labels</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/selectinbound') }}">Print from Inbound</a></li>
+				</ul>
+
 
 			<!--
 				<ul class="nav navbar-nav navbar-right">
@@ -61,7 +67,8 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	
+	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
 </body>
 </html>
