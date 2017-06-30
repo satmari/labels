@@ -20,6 +20,7 @@ class CreateCBExtralabelsTable extends Migration {
 			$table->string('bb_3')->nullable();
 
 			$table->string('bagno')->nullable();
+			$table->string('marker')->nullable();
 
 			$table->string('style');
 			$table->string('color');

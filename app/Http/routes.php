@@ -43,6 +43,9 @@ Route::post('/selectbatch_post/{inbound}', 'ControllerPackingList@selectbatch_po
 Route::get('/deleteinbound/{inbound}', 'ControllerPackingList@deleteinbound');
 Route::get('/deleteall', 'ControllerPackingList@deleteall');
 
+// Pallets
+Route::get('/pallets', 'ControllerPallets@index');
+Route::post('/printpallests_post', 'ControllerPallets@printpallests_post');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

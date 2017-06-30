@@ -60,13 +60,14 @@ class ControllerCBExtralabels extends Controller {
 		}
 			
 		// Live database
-		try {
+		// try {
 			
 			// Inteos - box information
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
 				bb.INTKEY, 
 				bb.BlueBoxNum,
 				bb.Bagno,
+				bb.IDMarker,
 				bb.BoxQuant,
 				st.StyCod,
 				sku.Variant
@@ -80,6 +81,7 @@ class ControllerCBExtralabels extends Controller {
 				GROUP BY		bb.INTKEY, 
 								bb.BlueBoxNum,
 								bb.Bagno,
+								bb.IDMarker,
 								bb.BoxQuant,
 								st.StyCod,
 								sku.Variant"
@@ -206,16 +208,20 @@ class ControllerCBExtralabels extends Controller {
 
 			$po = substr($inteos_array[0]['BlueBoxNum'], -8, 5);
 			$bb_3 = substr($inteos_array[0]['BlueBoxNum'], -3, 3);
-			
+	
+			/*			
 			$bagno_temp = $inteos_array[0]['Bagno'];
-
 			if (strpos($bagno_temp, '*') !== false) {
 				list($bagno, $marker) = explode('*', $bagno_temp);
 			} else {
 				$bagno = $bagno_temp;
 			}
 			// dd($bagno);
+			*/
 
+			$bagno = $inteos_array[0]['Bagno'];
+			$marker = $inteos_array[0]['IDMarker'];
+			
 			$style;
 			$color;
 			$color_desc;
@@ -228,16 +234,16 @@ class ControllerCBExtralabels extends Controller {
 
 			$bb_qty = $inteos_array[0]['BoxQuant'];
 
-			return view('cbextralabels.checkbox',compact('po','bb_3','bagno','style','color','color_desc','size_ita','size_eng','size_spa',
+			return view('cbextralabels.checkbox',compact('po','bb_3','bagno','marker','style','color','color_desc','size_ita','size_eng','size_spa',
 				'size_eur','size_usa','bb_qty','printer_name'));
 			// return Redirect::to('/');
 
 
-		}
-		catch (\Illuminate\Database\QueryException $e) {
-			$msg = "Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !";
-			return view('cbextralabels.error',compact('msg'));
-		}
+		// }
+		// catch (\Illuminate\Database\QueryException $e) {
+		// 	$msg = "Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !";
+		// 	return view('cbextralabels.error',compact('msg'));
+		// }
 
 
 		/*
@@ -258,6 +264,7 @@ class ControllerCBExtralabels extends Controller {
 		$po = $input['po'];
 		$bb_3 = $input['bb_3'];
 		$bagno = $input['bagno'];
+		$marker = $input['marker'];
 		$style = $input['style'];
 		$color = $input['color'];
 		$color_desc = $input['color_desc'];
@@ -287,7 +294,7 @@ class ControllerCBExtralabels extends Controller {
 		$sugested_qty = intval($input['bb_qty']) / $no_of_box;
 		$sugested_qty = round($sugested_qty);
 		
-		return view('cbextralabels.typeqty',compact('po','bb_3','bagno','style','color','color_desc','size_ita','size_eng','size_spa',
+		return view('cbextralabels.typeqty',compact('po','bb_3','bagno','marker','style','color','color_desc','size_ita','size_eng','size_spa',
 				'size_eur','size_usa','bb_qty','printer_name','no_of_box','extrabb','readybb','sugested_qty'));
 
 	}
@@ -301,6 +308,7 @@ class ControllerCBExtralabels extends Controller {
 		$po = $input['po'];
 		$bb_3 = $input['bb_3'];
 		$bagno = $input['bagno'];
+		$marker = $input['marker'];
 		$style = $input['style'];
 		$color = $input['color'];
 		$color_desc = $input['color_desc'];
@@ -314,7 +322,6 @@ class ControllerCBExtralabels extends Controller {
 		$no_of_box = $input['no_of_box'];
 		$extrabb = $input['extrabb'];
 		$readybb = $input['readybb'];
-
 		$date = date("d.m.Y");
 
 		for ($i=1; $i <= $no_of_box ; $i++) { 
@@ -347,6 +354,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->bb_3 = $bb_3;
 
 				$table->bagno = $bagno;
+				$table->marker = $marker;
 
 				$table->style = $style;
 				$table->color = $color;
@@ -391,6 +399,7 @@ class ControllerCBExtralabels extends Controller {
 				$table->bb_3 = $bb_3;
 
 				$table->bagno;
+				$table->marker = $marker;
 
 				$table->style = $style;
 				$table->color = $color;
