@@ -134,6 +134,9 @@ class ControllerCBExtralabels extends Controller {
 	    	
 
 	    	list($color, $size) = explode('-', $variant);
+	    	
+	    	// dd($style);
+	    	// dd($color);
 	    	// dd($size);
 
 	    	$size_to_search = str_replace("/","-",$size);

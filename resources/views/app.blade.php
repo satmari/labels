@@ -41,7 +41,10 @@
 					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/selectinbound') }}">Print from Inbound</a></li>
+					<li><a href="{{ url('/selectinbound') }}">Print labels from Inbound</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/pallets') }}">Print pallet labels</a></li>
 				</ul>
 
 
