@@ -209,7 +209,7 @@ class ControllerCBExtralabels extends Controller {
 				return view('cbextralabels.error',compact('msg'));
 			}
 
-			$po = substr($inteos_array[0]['BlueBoxNum'], -8, 5);
+			$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
 			$bb_3 = substr($inteos_array[0]['BlueBoxNum'], -3, 3);
 	
 			/*			
