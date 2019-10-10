@@ -70,7 +70,7 @@ class ControllerPackingList extends Controller {
 		
 		$inbound = DB::connection('sqlsrv4')->select(DB::raw("SELECT *
 				FROM [Gordon_LIVE].[dbo].[GORDON\$Packing List]
-				WHERE [Document No_] = :somevariable"), array(
+				WHERE [Document No_] = :somevariable ORDER BY [HU No_] asc"), array(
 			'somevariable' => $document,
 		));
 

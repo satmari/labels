@@ -19,10 +19,12 @@ class ControllerPallets extends Controller {
 	public function index()
 	{
 		//
+		/*
 		$pallets = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
 	      [Pallet Number]
 	      ,[Barcode]
 		  FROM [Gordon_LIVE].[dbo].[GORDON\$Pallets]"));
+		*/
 
 		$pallets = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
 		      t.palnum
@@ -31,7 +33,7 @@ class ControllerPallets extends Controller {
 		    SELECT [Pallet Number] AS palnum
 		    FROM [Gordon_LIVE].[dbo].[GORDON\$Pallets]
 		) AS t
-		WHERE t.palnum % 500 = 0    -- or % 40 etc
+		WHERE t.palnum % 500 = 0 
 		ORDER BY t.palnum asc"));
 
 		// dd($pallets);
