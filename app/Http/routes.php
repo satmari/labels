@@ -32,6 +32,14 @@ Route::get('/cblabel', 'ControllerCBlabel@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabel@searchinteos');
 Route::post('/searchinteos_store_one', 'ControllerCBlabel@searchinteos_store_one');
 
+// Bundle labals
+Route::get('/bundle', 'ControllerBundle@choosebundleqty');
+Route::post('/bundle_qty', 'ControllerBundle@bundle_qty');
+Route::post('/searchinteos_bundle', 'ControllerBundle@searchinteos_bundle');
+
+
+
+
 // Printer
 Route::get('/printer', 'HomeController@printer');
 Route::post('/printer_set', 'HomeController@printer_set');

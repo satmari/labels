@@ -46,6 +46,9 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/pallets') }}">Print pallet labels</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/bundle') }}">Print bundle labels</a></li>
+				</ul>
 
 
 			<!--
