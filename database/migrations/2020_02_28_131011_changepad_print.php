@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeBundletable extends Migration {
+class ChangepadPrint extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,10 +13,16 @@ class ChangeBundletable extends Migration {
 	public function up()
 	{
 		//
-		 Schema::table('bundlelabels', function($table)
+		 Schema::table('pad_print_confs', function($table)
 		 {
-     		// $table->string('bagno')->nullable();
+     		// $table->string('size_relevant')->nullable();
 		 });
+		  
+		  Schema::table('pad_print_labels', function($table)
+		 {
+     		// $table->string('size_relevant')->nullable();
+		 });
+
 	}
 
 	/**

@@ -196,18 +196,18 @@ class ControllerCBExtralabels extends Controller {
     	// list($color, $size) = explode('-', $variant);
 
 		$brlinija = substr_count($variant,"-");
-				// echo $brlinija." ";
+		// echo $brlinija." ";
 
-				if ($brlinija == 2)
-				{
-					list($color, $size1, $size2) = explode('-', $variant);
-					$size = $size1."-".$size2;
-					// echo $color." ".$size;	
-				} else {
-					list($color, $size) = explode('-', $variant);
-					// echo $color." ".$size;
-				}
-    	
+		if ($brlinija == 2)
+		{
+			list($color, $size1, $size2) = explode('-', $variant);
+			$size = $size1."-".$size2;
+			// echo $color." ".$size;	
+		} else {
+			list($color, $size) = explode('-', $variant);
+			// echo $color." ".$size;
+		}
+
     	// dd($style);
     	// dd($color);
     	// dd($size);
@@ -234,7 +234,8 @@ class ControllerCBExtralabels extends Controller {
 	      ,[Tgl_USA]
 	      ,[Descr_Col_CZ]
 			FROM [finalaudit].[dbo].[cartiglio]
-			WHERE [Cod_Art_CZ] = '".$style."' AND [Cod_Col_CZ] = '".$color."' AND [Tgl_ITA] like '".$size_to_search."%' "));
+			WHERE [Cod_Art_CZ] = '".$style."' AND [Cod_Col_CZ] = '".$color."' AND [Tgl_ITA] like '".$size_to_search."' "));
+    	// '.$size_to_search."%'
 
 
 		if ($cartiglio) {

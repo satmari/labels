@@ -31,6 +31,7 @@ class CreateBundlelabelsTable extends Migration {
 			$table->tinyInteger('printed');
 
 			$table->integer('labels_per_bundle')->nullable(); //added later
+			$table->string('bagno')->nullable();  //added later
 
 			$table->timestamps();
 		});

@@ -16,9 +16,9 @@
 Route::get('/', 'HomeController@index');
 
 // CBlabels - scann BB and print CB labels
-Route::get('/cblabels', 'ControllerCBlabels@searchininteos');
+//Route::get('/cblabels', 'ControllerCBlabels@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabels@searchinteos');
-Route::post('/searchinteos_store', 'ControllerCBlabels@searchinteos_store');
+//Route::post('/searchinteos_store', 'ControllerCBlabels@searchinteos_store');
 
 // CBExtralabel
 Route::get('/cbextralabels', 'ControllerCBExtralabels@searchininteos');
@@ -54,6 +54,23 @@ Route::get('/deleteall', 'ControllerPackingList@deleteall');
 // Pallets
 Route::get('/pallets', 'ControllerPallets@index');
 Route::post('/printpallests_post', 'ControllerPallets@printpallests_post');
+
+// Pad Printing
+Route::get('/padprint', 'ControllerPadPrinting@index');
+Route::post('/padprint_post', 'ControllerPadPrinting@padprint_post');
+Route::post('/padprint_print', 'ControllerPadPrinting@padprint_print');
+
+Route::get('padprint_conf', 'ControllerPadPrintingConf@index');
+Route::get('add_new_padprint_conf', 'ControllerPadPrintingConf@add_new_padprint_conf');
+Route::post('padprint_conf_insert', 'ControllerPadPrintingConf@padprint_conf_insert');
+Route::get('padprint_conf/{id}', 'ControllerPadPrintingConf@padprint_conf_edit');
+Route::post('padprint_conf_update/{id}', 'ControllerPadPrintingConf@padprint_conf_update');
+
+
+// SAP acc
+Route::get('sap_acc', 'SAP_acc@index');
+Route::post('take_sap_code', 'SAP_acc@take_sap_code');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

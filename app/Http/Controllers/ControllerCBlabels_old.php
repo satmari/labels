@@ -139,7 +139,7 @@ class ControllerCBlabels extends Controller {
 	    	}
 
 			// Inteos - number of labels
-			$inteos_count = DB::connection('sqlsrv2')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZG].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
+			$inteos_count = DB::connection('sqlsrv5')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZKKA].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
 					'somevariable' => $bbcode
 			));
 

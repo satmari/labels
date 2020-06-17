@@ -218,6 +218,7 @@ class ControllerBundle extends Controller {
     	$style = $inteos_array[0]['StyCod'];
     	$variant = $inteos_array[0]['Variant'];
     	$bb_qty = $inteos_array[0]['BoxQuant'];
+    	$bagno = $inteos_array[0]['Bagno'];
 
     	$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
 		$bb_3 = substr($inteos_array[0]['BlueBoxNum'], -3, 3);
@@ -278,6 +279,7 @@ class ControllerBundle extends Controller {
 					$table->style = $style;
 					$table->color = $color;
 					$table->size_ita = $size_to_search;
+					$table->bagno = $bagno;
 					
 					$table->bundle = $i + 1;
 					
