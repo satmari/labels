@@ -61,7 +61,7 @@ class ControllerCBlabel extends Controller {
 		
 		// dd(substr($cbcode, 0, 2));
 
-		if (substr($cbcode, 0, 2) == '70') {
+		if ((substr($cbcode, 0, 2) == '70') OR (substr($cbcode, 0, 2) == '84')) {
 
 			// Live database
 			// Inteos - box information
@@ -93,7 +93,7 @@ class ControllerCBlabel extends Controller {
 	        	return view('cblabel.error', compact('msg'));
 	    	}
 
-		} elseif (substr($cbcode, 0, 2) == '71') {
+		} elseif ((substr($cbcode, 0, 2) == '71') OR (substr($cbcode, 0, 2) == '85')) {
 			
 			// Live Kikinda database
 			// Inteos - box information

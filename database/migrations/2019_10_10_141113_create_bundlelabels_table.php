@@ -26,6 +26,7 @@ class CreateBundlelabelsTable extends Migration {
 			$table->string('size_ita');
 			
 			$table->integer('bundle');
+			$table->integer('bundleqty');
 
 			$table->string('printer_name');
 			$table->tinyInteger('printed');

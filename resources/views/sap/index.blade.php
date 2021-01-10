@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="panel-body">
-                    <p>Qty:  <span style="color:red;">*</span></p>
-                        {!! Form::number('qty', null, ['class' => 'form-control']) !!}
+                    <p>Qty:  <span style="color:red;">* za decimalni broj koristite tacku</span></p>
+                        {!! Form::text('qty', null, ['class' => 'form-control']) !!}
                 </div>
 
                 <div class="panel-body">

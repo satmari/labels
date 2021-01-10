@@ -36,6 +36,14 @@ class ControllerBundle extends Controller {
 		$labels_per_bundle = $input['labels_per_bundle'];
 		// dd($bundleqty);
 
+		if ($bundleqty > 100) {
+			dd("Bundle Qty je veci od 100, unestite ispravnu kolicinu");
+		}
+
+		if ($labels_per_bundle > 100) {
+			dd("Label per bundle je veci od 100, unestite ispravnu kolicinu");
+		}
+
 		//
 		$inteosdb = Session::get('inteosdb');
         // dd($inteosdb);
@@ -220,23 +228,35 @@ class ControllerBundle extends Controller {
     	$bb_qty = $inteos_array[0]['BoxQuant'];
     	$bagno = $inteos_array[0]['Bagno'];
 
-    	$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+    	// $po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+		$brcrtica = substr_count($inteos_array[0]['BlueBoxNum'],"-");
+		// echo $brcrtica." ";
+
+		if ($brcrtica == 1)
+		{
+			list($one, $two) = explode('-', $inteos_array[0]['BlueBoxNum']);
+			$po = $one;
+		} else {
+			$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+		}    	
+		// dd($po);
+
 		$bb_3 = substr($inteos_array[0]['BlueBoxNum'], -3, 3);
     	
     	// list($color, $size) = explode('-', $variant);
 		$brlinija = substr_count($variant,"-");
 		// echo $brlinija." ";
 
-				if ($brlinija == 2)
-				{
-					list($color, $size1, $size2) = explode('-', $variant);
-					$size = $size1."-".$size2;
-					// echo $color." ".$size;	
-				} else {
-					list($color, $size) = explode('-', $variant);
-					// echo $color." ".$size;
-				}
-    	
+		if ($brlinija == 2)
+		{
+			list($color, $size1, $size2) = explode('-', $variant);
+			$size = $size1."-".$size2;
+			// echo $color." ".$size;	
+		} else {
+			list($color, $size) = explode('-', $variant);
+			// echo $color." ".$size;
+		}
+
     	// dd($style);
     	// dd($color);
     	// dd($size);
@@ -256,14 +276,14 @@ class ControllerBundle extends Controller {
     	}
 
 		$labels = ceil($bb_qty / $bundleqty);
-		// dd("bb_qty: ".$bb_qty." , bundleqty: ".$bundleqty." ,  labels: ".$labels);
+		// dd("bb_qty: ".$bb_qty." , bundleqty: ".$bundleqty." ,  labels: ".$labels .", labels_per_bundle:". $labels_per_bundle);
 
 		for ($i=0; $i < $labels; $i++) { 
 			
 			// var_dump($labels);
 
 			// $printer_name = 'SBT-WP01';
-	    	$printed = 0;
+	    	$printed = 1;
 
 	    	for ($l=0; $l < $labels_per_bundle ; $l++) { 
 				
@@ -282,13 +302,14 @@ class ControllerBundle extends Controller {
 					$table->bagno = $bagno;
 					
 					$table->bundle = $i + 1;
+					$table->bundleqty = $bundleqty;
 					
 					$table->printer_name = $printer_name;
 					$table->printed = $printed;
 					$table->labels_per_bundle = $labels_per_bundle;
 					
 					$table->save();
-
+ 
 				}
 				catch (\Illuminate\Database\QueryException $e) {
 					$msg = "Problem to save bundle label in table";

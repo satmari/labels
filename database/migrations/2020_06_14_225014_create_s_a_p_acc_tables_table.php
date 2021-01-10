@@ -36,7 +36,8 @@ class CreateSAPAccTablesTable extends Migration {
 			$table->string('full_barcode')->nullable();
 
 			$table->string('location')->nullable();
-			$table->integer('qty');
+			// $table->integer('qty');
+			$table->float('qty');
 
 			$table->string('printer');
 			$table->string('printed');

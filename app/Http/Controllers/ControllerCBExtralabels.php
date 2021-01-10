@@ -74,7 +74,8 @@ class ControllerCBExtralabels extends Controller {
 				bb.IDMarker,
 				bb.BoxQuant,
 				st.StyCod,
-				sku.Variant
+				sku.Variant,
+				sku.ClrDesc
 				FROM            CNF_BlueBox AS bb 
 				LEFT OUTER JOIN     dbo.CNF_PO AS po ON bb.IntKeyPO = po.INTKEY 
 				LEFT OUTER JOIN     dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
@@ -88,7 +89,8 @@ class ControllerCBExtralabels extends Controller {
 								bb.IDMarker,
 								bb.BoxQuant,
 								st.StyCod,
-								sku.Variant"
+								sku.Variant,
+								sku.ClrDesc"
 				), array(
 					'somevariable' => $bbcode
 			));
@@ -123,7 +125,8 @@ class ControllerCBExtralabels extends Controller {
 				bb.IDMarker,
 				bb.BoxQuant,
 				st.StyCod,
-				sku.Variant
+				sku.Variant,
+				sku.ClrDesc
 				FROM            CNF_BlueBox AS bb 
 				LEFT OUTER JOIN     dbo.CNF_PO AS po ON bb.IntKeyPO = po.INTKEY 
 				LEFT OUTER JOIN     dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
@@ -137,7 +140,8 @@ class ControllerCBExtralabels extends Controller {
 								bb.IDMarker,
 								bb.BoxQuant,
 								st.StyCod,
-								sku.Variant"
+								sku.Variant,
+								sku.ClrDesc"
 				), array(
 					'somevariable' => $bbcode
 			));
@@ -182,6 +186,8 @@ class ControllerCBExtralabels extends Controller {
 		    }
 		    return $data;
 		}
+
+		// dd($inteos);
 	
     	$inteos_array_count = object_to_array($inteos_count);
     	$qty_to_print = $inteos_array_count[0]['count'];
@@ -191,6 +197,7 @@ class ControllerCBExtralabels extends Controller {
     	$bb = $inteos_array[0]['BlueBoxNum'];
     	$style = $inteos_array[0]['StyCod'];
     	$variant = $inteos_array[0]['Variant'];
+    	$color_desc = $inteos_array[0]['ClrDesc'];
     	
 
     	// list($color, $size) = explode('-', $variant);
@@ -212,8 +219,6 @@ class ControllerCBExtralabels extends Controller {
     	// dd($color);
     	// dd($size);
 
-
-
     	$size1 = str_replace("/","-",$size);
 		/*
 		$size2 = str_replace("ANNI","",$size1);
@@ -223,6 +228,7 @@ class ControllerCBExtralabels extends Controller {
 		$size_to_search = trim($size1);
 		// dd($size_to_search);
 
+		/*
     	// Cartiglio
     	$cartiglio = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Cod_Bar]
 	      ,[Cod_Art_CZ]
@@ -309,16 +315,39 @@ class ControllerCBExtralabels extends Controller {
 			$table->printer_name = $printer_name;
 			$table->printed = $printed;
 			
-			$table->save();
+			// $table->save();
 
 		}
 		catch (\Illuminate\Database\QueryException $e) {
 			$msg = "Problem to save cb label in table";
 			return view('cbextralabels.error',compact('msg'));
 		}
+		*/
+		
 
-		$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+		$brcrtica = substr_count($inteos_array[0]['BlueBoxNum'],"-");
+		// echo $brcrtica." ";
+		// dd($brcrtica);
+		// dd($inteos_array[0]['BlueBoxNum']);
+
+		if ($brcrtica == 1)
+		{
+			list($one, $two) = explode('-', $inteos_array[0]['BlueBoxNum']);
+			$po = $one;
+			// dd($po);
+			// $po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+
+
+		} else {
+			$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);			
+			
+		}
+
+		// $po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+		// dd($po);
+
 		$bb_3 = substr($inteos_array[0]['BlueBoxNum'], -3, 3);
+		// dd($bb_3);
 
 		/*			
 		$bagno_temp = $inteos_array[0]['Bagno'];
@@ -335,13 +364,13 @@ class ControllerCBExtralabels extends Controller {
 		
 		$style;
 		$color;
-		$color_desc;
+		$color_desc = $color_desc;
 
-		$size_ita;
-		$size_usa;
-		$size_eur;
-		$size_spa;
-		$size_eng;
+		$size_ita = $size_to_search;
+		$size_usa = '';
+		$size_eur = '';
+		$size_spa = '';
+		$size_eng = '';
 
 		$bb_qty = $inteos_array[0]['BoxQuant'];
 

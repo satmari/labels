@@ -38,8 +38,6 @@ Route::post('/bundle_qty', 'ControllerBundle@bundle_qty');
 Route::post('/searchinteos_bundle', 'ControllerBundle@searchinteos_bundle');
 
 
-
-
 // Printer
 Route::get('/printer', 'HomeController@printer');
 Route::post('/printer_set', 'HomeController@printer_set');
@@ -71,6 +69,9 @@ Route::post('padprint_conf_update/{id}', 'ControllerPadPrintingConf@padprint_con
 Route::get('sap_acc', 'SAP_acc@index');
 Route::post('take_sap_code', 'SAP_acc@take_sap_code');
 
+// SAP acc
+Route::get('sap_hu', 'SAP_hu@index');
+Route::post('take_sap_code_su', 'SAP_hu@take_sap_code_su');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

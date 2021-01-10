@@ -38,15 +38,15 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/cbextralabels') }}">Scann BB and print CB labels</a></li>
 				</ul>
-				<ul class="nav navbar-nav">
+				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
+				</ul> -->
+				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/selectinbound') }}">Print labels from Inbound</a></li>
-				</ul>
-				<ul class="nav navbar-nav">
+				</ul> -->
+				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/pallets') }}">Print pallet labels</a></li>
-				</ul>
+				</ul> -->
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/bundle') }}">Print bundle labels</a></li>
 				</ul>
@@ -56,9 +56,12 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/padprint_conf') }}">PadPrint Conf</a></li>
 				</ul>
-				<ul class="nav navbar-nav">
+				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/sap_acc') }}">SAP Acc</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/sap_hu') }}">SAP SU</a></li>
+				</ul> -->
 
 
 

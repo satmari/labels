@@ -42,7 +42,8 @@ class SAP_acc extends Controller {
 
 		$sku = $input['sku'];
 		$location = $input['location'];
-		$qty = $input['qty'];
+		$qty = (float)$input['qty'];
+		// dd($qty);
 		$printer_name = $input['printer_name'];
 		// dd($printer_name);
 
