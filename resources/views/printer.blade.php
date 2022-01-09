@@ -14,7 +14,7 @@
 						{!! Form::open(['method'=>'POST', 'url'=>'/printer_set']) !!}
 		
 							<div class="panel-body">
-								{!! Form::select('printer_name', array(''=>'','Krojacnica'=>'Krojacnica','Krojacnica_2'=>'Krojacnica_2','Krojacnica_paspul'=>'Krojacnica_paspul','Magacin'=>'Magacin','Kikinda'=>'Kikinda','SBT-WP01'=>'SBT-WP01','SBT-WP02'=>'SBT-WP02','SBT-WP03'=>'SBT-WP03','SBT-WP04'=>'SBT-WP04','SBT-WP05'=>'SBT-WP05','SBT-WP06'=>'SBT-WP06','SBT-WP07'=>'SBT-WP07','Workstudy A4'=>'Workstudy A4','Test'=>'Test'), null, array('class' => 'form-control')); !!} 
+								{!! Form::select('printer_name', array(''=>'','Krojacnica'=>'Krojacnica','Krojacnica_2'=>'Krojacnica_2','Krojacnica_paspul'=>'Krojacnica_paspul','Magacin'=>'Magacin','Kikinda'=>'Kikinda','Senta'=>'Senta','SBT-WP01'=>'SBT-WP01','SBT-WP02'=>'SBT-WP02','SBT-WP03'=>'SBT-WP03','SBT-WP04'=>'SBT-WP04','SBT-WP05'=>'SBT-WP05','SBT-WP06'=>'SBT-WP06','SBT-WP07'=>'SBT-WP07','Workstudy A4'=>'Workstudy A4','Test'=>'Test'), null, array('class' => 'form-control')); !!} 
 							</div>
 							<br>
 

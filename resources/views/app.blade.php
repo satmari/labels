@@ -63,6 +63,10 @@
 					<li><a href="{{ url('/sap_hu') }}">SAP SU</a></li>
 				</ul> -->
 
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/selectinbound') }}">Print labels from Inbound (TEST)</a></li>
+				</ul>
+
 
 
 			<!--
