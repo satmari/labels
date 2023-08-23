@@ -73,6 +73,17 @@ Route::post('take_sap_code', 'SAP_acc@take_sap_code');
 Route::get('sap_hu', 'SAP_hu@index');
 Route::post('take_sap_code_su', 'SAP_hu@take_sap_code_su');
 
+// Operatos
+Route::get('print_oprators', 'ControllerOperator@index');
+Route::post('operator_print', 'ControllerOperator@operator_print');
+
+Route::post('operator_print_multiple', 'ControllerOperator_import@operator_print_multiple');
+
+// OS
+Route::get('print_os', 'ControllerOS@index');
+Route::post('os_print', 'ControllerOS@os_print');
+
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
