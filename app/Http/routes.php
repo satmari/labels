@@ -16,9 +16,9 @@
 Route::get('/', 'HomeController@index');
 
 // CBlabels - scann BB and print CB labels
-Route::get('/cblabels', 'ControllerCBlabels@searchininteos');
+//Route::get('/cblabels', 'ControllerCBlabels@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabels@searchinteos');
-Route::post('/searchinteos_store', 'ControllerCBlabels@searchinteos_store');
+//Route::post('/searchinteos_store', 'ControllerCBlabels@searchinteos_store');
 
 // CBExtralabel
 Route::get('/cbextralabels', 'ControllerCBExtralabels@searchininteos');
@@ -32,6 +32,12 @@ Route::get('/cblabel', 'ControllerCBlabel@searchininteos');
 // Route::get('/searchinteos', 'ControllerCBlabel@searchinteos');
 Route::post('/searchinteos_store_one', 'ControllerCBlabel@searchinteos_store_one');
 
+// Bundle labals
+Route::get('/bundle', 'ControllerBundle@choosebundleqty');
+Route::post('/bundle_qty', 'ControllerBundle@bundle_qty');
+Route::post('/searchinteos_bundle', 'ControllerBundle@searchinteos_bundle');
+
+
 // Printer
 Route::get('/printer', 'HomeController@printer');
 Route::post('/printer_set', 'HomeController@printer_set');
@@ -42,6 +48,42 @@ Route::post('/selectinbound_post', 'ControllerPackingList@selectinbound_post');
 Route::post('/selectbatch_post/{inbound}', 'ControllerPackingList@selectbatch_post');
 Route::get('/deleteinbound/{inbound}', 'ControllerPackingList@deleteinbound');
 Route::get('/deleteall', 'ControllerPackingList@deleteall');
+
+// Pallets
+Route::get('/pallets', 'ControllerPallets@index');
+Route::post('/printpallests_post', 'ControllerPallets@printpallests_post');
+
+// Pad Printing
+Route::get('/padprint', 'ControllerPadPrinting@index');
+Route::post('/padprint_post', 'ControllerPadPrinting@padprint_post');
+Route::post('/padprint_print', 'ControllerPadPrinting@padprint_print');
+
+Route::get('padprint_conf', 'ControllerPadPrintingConf@index');
+Route::get('add_new_padprint_conf', 'ControllerPadPrintingConf@add_new_padprint_conf');
+Route::post('padprint_conf_insert', 'ControllerPadPrintingConf@padprint_conf_insert');
+Route::get('padprint_conf/{id}', 'ControllerPadPrintingConf@padprint_conf_edit');
+Route::post('padprint_conf_update/{id}', 'ControllerPadPrintingConf@padprint_conf_update');
+
+
+// SAP acc
+Route::get('sap_acc', 'SAP_acc@index');
+Route::post('take_sap_code', 'SAP_acc@take_sap_code');
+
+// SAP acc
+Route::get('sap_hu', 'SAP_hu@index');
+Route::post('take_sap_code_su', 'SAP_hu@take_sap_code_su');
+
+// Operatos
+Route::get('print_oprators', 'ControllerOperator@index');
+Route::post('operator_print', 'ControllerOperator@operator_print');
+
+Route::post('operator_print_multiple', 'ControllerOperator_import@operator_print_multiple');
+
+// OS
+Route::get('print_os', 'ControllerOS@index');
+Route::post('os_print', 'ControllerOS@os_print');
+
+Route::post('os_print_multiple', 'ControllerOS_import@os_print_multiple');
 
 
 Route::controllers([

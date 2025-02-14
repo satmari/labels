@@ -16,6 +16,7 @@
                 {!!Form::hidden('po', $po) !!}
                 {!!Form::hidden('bb_3', $bb_3) !!}
                 {!!Form::hidden('bagno', $bagno) !!}
+                {!!Form::hidden('marker', $marker) !!}
                 {!!Form::hidden('style', $style) !!}
                 {!!Form::hidden('color', $color) !!}
                 {!!Form::hidden('color_desc', $color_desc) !!}

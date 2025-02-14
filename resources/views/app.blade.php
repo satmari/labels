@@ -9,6 +9,7 @@
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/css.css') }}" rel="stylesheet">
 	<link href="{{ asset('/css/custom.css') }}" rel="stylesheet">
+	<link href="{{ asset('/css/choosen.css') }}" rel='stylesheet' type='text/css'>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,12 +38,41 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/cbextralabels') }}">Scann BB and print CB labels</a></li>
 				</ul>
-				<ul class="nav navbar-nav">
+				<!-- <ul class="nav navbar-nav">
 					<li><a href="{{ url('/cblabel') }}">Scann CB and print ONE CB label</a></li>
+				</ul> -->
+				<!-- <ul class="nav navbar-nav">
+					<li><a href="{{ url('/selectinbound') }}">Print labels from Inbound</a></li>
+				</ul> -->
+				<!-- <ul class="nav navbar-nav">
+					<li><a href="{{ url('/pallets') }}">Print pallet labels</a></li>
+				</ul> -->
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/bundle') }}">Print bundle labels</a></li>
 				</ul>
 				<ul class="nav navbar-nav">
-					<li><a href="{{ url('/selectinbound') }}">Print from Inbound</a></li>
+					<li><a href="{{ url('/padprint') }}">Print PadPrint labels</a></li>
 				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/padprint_conf') }}">PadPrint Conf</a></li>
+				</ul>
+				<!-- <ul class="nav navbar-nav">
+					<li><a href="{{ url('/sap_acc') }}">SAP Acc</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/sap_hu') }}">SAP SU</a></li>
+				</ul> -->
+
+				<!-- <ul class="nav navbar-nav">
+					<li><a href="{{ url('/selectinbound') }}">Print labels from Inbound (TEST)</a></li>
+				</ul> -->
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/print_oprators') }}">Print Operator label</a></li>
+				</ul>
+				<ul class="nav navbar-nav">
+					<li><a href="{{ url('/print_os') }}">Print OS label</a></li>
+				</ul>
+
 
 
 			<!--
@@ -70,5 +100,104 @@
 	
 	<script src="{{ asset('/js/jquery.min.js') }}" type="text/javascript" ></script>
     <script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript" ></script>
+    <script src="{{ asset('/js/choosen.js') }}" type="text/javascript" ></script>
+
+ <script type="text/javascript">
+$(function() {
+    	
+	// $('#po').autocomplete({
+	// 	minLength: 3,
+	// 	autoFocus: true,
+	// 	source: '{{ URL('getpodata')}}'
+	// });
+	// $('#module').autocomplete({
+	// 	minLength: 1,
+	// 	autoFocus: true,
+	// 	source: '{{ URL('getmoduledata')}}'
+	// });
+	// $('#style').autocomplete({
+	// 	minLength: 3,
+	// 	autoFocus: true,
+	// 	source: '{{ URL('getstyledata')}}'
+	// });
+
+	$(".chosen").chosen();
+
+	$('#filter').keyup(function () {
+
+        var rex = new RegExp($(this).val(), 'i');
+        $('.searchable tr').hide();
+        $('.searchable tr').filter(function () {
+            return rex.test($(this).text());
+        }).show();
+	});
+
+
+	// $('#myTabs a').click(function (e) {
+ //  		e.preventDefault()
+ //  		$(this).tab('show')
+	// });
+	// $('#myTabs a:first').tab('show') // Select first tab
+
+	// $(function() {
+ //    	$( "#datepicker" ).datepicker();
+ //  	});
+
+  	
+	$('#sort').bootstrapTable({
+    	
+	});
+
+	//$('.table tr').each(function(){
+  		
+  		//$("td:contains('pending')").addClass('pending');
+  		//$("td:contains('confirmed')").addClass('confirmed');
+  		//$("td:contains('back')").addClass('back');
+  		//$("td:contains('error')").addClass('error');
+  		//$("td:contains('TEZENIS')").addClass('tezenis');
+
+  		// $("td:contains('TEZENIS')").function() {
+  		// 	$(this).index().addClass('tezenis');
+  		// }
+	//});
+
+	// $('.days').each(function(){
+	// 	var qty = $(this).html();
+	// 	//console.log(qty);
+
+	// 	if (qty < 7 ) {
+	// 		$(this).addClass('zeleno');
+	// 	} else if ((qty >= 7) && (qty <= 15)) {
+	// 		$(this).addClass('zuto');
+	// 	} else if (qty > 15 ) {	
+	// 		$(this).addClass('crveno');
+	// 	}
+	// });
+
+
+	// $('.status').each(function(){
+	// 	var status = $(this).html();
+	// 	//console.log(qty);
+
+	// 	if (status == 'pending' ) {
+	// 		$(this).addClass('pending');
+	// 	} else if (status == 'confirmed') {
+	// 		$(this).addClass('confirmed');
+	// 	} else {	
+	// 		$(this).addClass('back');
+	// 	}
+	// });
+
+	// $('td').click(function() {
+	//    	var myCol = $(this).index();
+ 	//    	var $tr = $(this).closest('tr');
+ 	//    	var myRow = $tr.index();
+
+ 	//    	console.log("col: "+myCol+" tr: "+$tr+" row:"+ myRow);
+	// });
+
+});
+</script>
+
 </body>
 </html>

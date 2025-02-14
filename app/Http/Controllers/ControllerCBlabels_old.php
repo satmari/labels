@@ -12,40 +12,44 @@ use DB;
 
 use Session;
 
-class ControllerCBlabel extends Controller {
+class ControllerCBlabels extends Controller {
 
 	/**
-	 * Print label by scanning CB
+	 * Print labels by scanning BB !!!!! Ne koristi se !!!
 	 *
 	 * @return Response
 	 */
 	public function index()
 	{
 		//
-		return view('cblabel.index');
+		return view('cblabels.index');
 	}
 
 	public function searchininteos() 
 	{
 		//
-		try {
-			return view('cblabel.searchinteos');
-		}
-		catch (\Illuminate\Database\QueryException $e) {
-			return view('cblabel.searchinteos');
-		}
+			
+		$inteosdb = Session::get('inteosdb');
+        // dd($inteosdb);
+
+        if (is_null($inteosdb)) {
+        	$inteosdb = '1';	
+        }
+		return view('cblabels.searchinteos',compact('inteosdb'));
+
 	}
 
-	public function searchinteos_store_one(Request $request) 
+	public function searchinteos_store(Request $request) 
 	{
 		//
 		//
-		$this->validate($request, ['cb_code' => 'required']);
+		$this->validate($request, ['bb_code' => 'required']);
 		$input = $request->all(); // change use (delete or comment user Requestl; )
+		//1717281
 
-		//
-		$cbcode = $input['cb_code'];
-		// dd($cbcode);
+		$bbcode = $input['bb_code'];
+		$inteosdb = $inteosinput['inteosdb_new'];
+		Session::set('inteosdb', $inteosdb );
 		
 		$msg = '';
 		$msg1 = '';
@@ -59,80 +63,103 @@ class ControllerCBlabel extends Controller {
         	return view('cblabels.error', compact('msg'));
 		}
 		
-		// dd(substr($cbcode, 0, 2));
 
-		if ((substr($cbcode, 0, 2) == '70') OR (substr($cbcode, 0, 2) == '84')) {
 
+		if ($inteosdb == '1') {
 			// Live database
-			// Inteos - box information
 			$inteos = DB::connection('sqlsrv2')->select(DB::raw("SELECT 
-				bb.INTKEY,
+				bb.INTKEY, 
 				bb.BlueBoxNum,
 				st.StyCod,
 				sku.Variant
-				FROM            dbo.CNF_CartonBox AS cb 
-				LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
-				LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
-				LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
-				LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
-				
-				WHERE			cb.BoxNum = :somevariable
+				FROM            dbo.CNF_BlueBox AS bb 
+				LEFT OUTER JOIN     dbo.CNF_PO AS po ON bb.IntKeyPO = po.INTKEY 
+				LEFT OUTER JOIN     dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
+				LEFT OUTER JOIN     dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
 
-				GROUP BY		bb.INTKEY,
+				WHERE			bb.[INTKEY] = :somevariable
+
+				GROUP BY		bb.INTKEY, 
 								bb.BlueBoxNum,
 								st.StyCod,
 								sku.Variant"
 				), array(
-					'somevariable' => $cbcode
+					'somevariable' => $bbcode
 			));
+			// dd($inteos);
 
 			if ($inteos) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find CB in Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU !';
-	        	return view('cblabel.error', compact('msg'));
+	        	$msg = 'Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !';
+	        	return view('cblabels.error', compact('msg'));
 	    	}
 
-		} elseif ((substr($cbcode, 0, 2) == '71') OR (substr($cbcode, 0, 2) == '85')) {
-			
-			// Live Kikinda database
-			// Inteos - box information
+			// Inteos - number of labels
+			$inteos_count = DB::connection('sqlsrv2')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZG].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
+					'somevariable' => $bbcode
+			));
+
+			if ($inteos_count != 0) {
+				//continue
+			} else {
+	        	$msg = 'Cannot find CB in Inteos for this BB, NE POSTOJI KARTONSKA KUTIJA VEZANA ZA OVU PLAVU KUTIJU U INTEOSU !';
+	        	return view('cblabels.error', compact('msg'));
+	    	}
+
+		} elseif ($inteosdb == '2') {
+
+			// Kikinda database
 			$inteos = DB::connection('sqlsrv5')->select(DB::raw("SELECT 
-				bb.INTKEY,
+				bb.INTKEY, 
 				bb.BlueBoxNum,
 				st.StyCod,
 				sku.Variant
-				FROM            dbo.CNF_CartonBox AS cb 
-				LEFT OUTER JOIN dbo.CNF_PO AS po ON cb.IntKeyPO = po.INTKEY 
-				LEFT OUTER JOIN dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY
-				LEFT OUTER JOIN dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
-				LEFT OUTER JOIN dbo.CNF_BlueBox AS bb ON cb.BBcreated = bb.INTKEY
-				
-				WHERE			cb.BoxNum = :somevariable
+				FROM            dbo.CNF_BlueBox AS bb 
+				LEFT OUTER JOIN     dbo.CNF_PO AS po ON bb.IntKeyPO = po.INTKEY 
+				LEFT OUTER JOIN     dbo.CNF_SKU AS sku ON po.SKUKEY = sku.INTKEY 
+				LEFT OUTER JOIN     dbo.CNF_STYLE AS st ON sku.STYKEY = st.INTKEY
 
-				GROUP BY		bb.INTKEY,
+				WHERE			bb.[INTKEY] = :somevariable
+
+				GROUP BY		bb.INTKEY, 
 								bb.BlueBoxNum,
 								st.StyCod,
 								sku.Variant"
 				), array(
-					'somevariable' => $cbcode
+					'somevariable' => $bbcode
 			));
+			// dd($inteos);
 
 			if ($inteos) {
 				//continue
 			} else {
-	        	$msg = 'Cannot find CB in Inteos Kikinda, NE POSTOJI KARTONSKA KUTIJA U INTEOSU KIKINDA!';
-	        	return view('cblabel.error', compact('msg'));
+	        	$msg = 'Cannot find BB in Inteos, NE POSTOJI PLAVA KUTIJA U INTEOSU !';
+	        	return view('cblabels.error', compact('msg'));
 	    	}
+
+			// Inteos - number of labels
+			$inteos_count = DB::connection('sqlsrv5')->select(DB::raw("SELECT COUNT([BoxNum]) as count FROM [BdkCLZKKA].[dbo].[CNF_CartonBox] WHERE [BBcreated] = :somevariable"), array(
+					'somevariable' => $bbcode
+			));
+
+			if ($inteos_count != 0) {
+				//continue
+			} else {
+	        	$msg = 'Cannot find CB in Inteos for this BB, NE POSTOJI KARTONSKA KUTIJA VEZANA ZA OVU PLAVU KUTIJU U INTEOSU !';
+	        	return view('cblabels.error', compact('msg'));
+	    	}	
 
 		} else {
 			
-			$msg = 'Cannot find CB in any Inteos, NE POSTOJI KARTONSKA KUTIJA U INTEOSU!';
-        	return view('cblabel.error', compact('msg'));
+			$msg = 'Cannot find CB in Inteos for this BB, NE POSTOJI KARTONSKA KUTIJA VEZANA ZA OVU PLAVU KUTIJU U INTEOSU !';
+	        return view('cblabels.error', compact('msg'));
+
 		}
 
+		
 
-		function object_to_array($data)
+    	function object_to_array($data)
 		{
 		    if (is_array($data) || is_object($data))
 		    {
@@ -146,15 +173,16 @@ class ControllerCBlabel extends Controller {
 		    return $data;
 		}
 	
-    	$inteos_array = object_to_array($inteos);
+    	$inteos_array_count = object_to_array($inteos_count);
+    	$qty_to_print = $inteos_array_count[0]['count'];
 
+    	$inteos_array = object_to_array($inteos);
     	$bbcode = $inteos_array[0]['INTKEY'];
     	$bb = $inteos_array[0]['BlueBoxNum'];
     	$style = $inteos_array[0]['StyCod'];
     	$variant = $inteos_array[0]['Variant'];
 
     	// list($color, $size) = explode('-', $variant);
-    	
     	$brlinija = substr_count($variant,"-");
 		// echo $brlinija." ";
 
@@ -168,15 +196,7 @@ class ControllerCBlabel extends Controller {
 				// echo $color." ".$size;
 			}
 
-    	$size1 = str_replace("/","-",$size);
-		/*
-		$size2 = str_replace("ANNI","",$size1);
-		$size3 = str_replace("Y","",$size2);
-		$size_to_search = str_replace("A","",$size3);
-		*/
-		$size_to_search = trim($size1);
-		// dd($size_to_search);
-
+    	$size_to_search = str_replace("/","-",$size);
     	// Cartiglio
 
     	$cartiglio = DB::connection('sqlsrv3')->select(DB::raw("SELECT [Cod_Bar]
@@ -189,7 +209,8 @@ class ControllerCBlabel extends Controller {
 	      ,[Tgl_USA]
 	      ,[Descr_Col_CZ]
 			FROM [finalaudit].[dbo].[cartiglio]
-			WHERE [Cod_Art_CZ] = '".$style."' AND [Cod_Col_CZ] = '".$color."' AND [Tgl_ITA] like '".$size_to_search."%' "));
+			WHERE [Cod_Art_CZ] = :style AND [Cod_Col_CZ] = :color AND [Tgl_ITA] = :size"), array( 'style' => $style, 'color' => $color, 'size' => $size_to_search
+		));
 
 		if ($cartiglio) {
 			//continue
@@ -202,44 +223,16 @@ class ControllerCBlabel extends Controller {
     	$barcode = $cartiglio_array[0]['Cod_Bar'];
     	$barcode_3 = substr($cartiglio_array[0]['Cod_Bar'], -3, 3);
     	// dd($barcode_3);
-
     	$color_desc = $cartiglio_array[0]['Descr_Col_CZ'];
 
     	$size_ita = $cartiglio_array[0]['Tgl_ITA'];
-    	$size_ita = str_replace("ANNI","",$size_ita);
-		$size_ita = str_replace("Y","",$size_ita);
-		$size_ita = str_replace("A","",$size_ita);
-		$size_ita = trim($size_ita);
-
     	$size_eng = $cartiglio_array[0]['Tgl_ENG'];
-    	$size_eng = str_replace("ANNI","",$size_eng);
-		$size_eng = str_replace("Y","",$size_eng);
-		$size_eng = str_replace("A","",$size_eng);
-		$size_eng = trim($size_eng);
-
     	$size_spa = $cartiglio_array[0]['Tgl_SPA'];
-    	$size_spa = str_replace("ANNI","",$size_spa);
-		$size_spa = str_replace("Y","",$size_spa);
-		$size_spa = str_replace("A","",$size_spa);
-		$size_spa = trim($size_spa);
-
     	$size_eur = $cartiglio_array[0]['Tgl_EUR'];
-    	$size_eur = str_replace("ANNI","",$size_eur);
-		$size_eur = str_replace("Y","",$size_eur);
-		$size_eur = str_replace("A","",$size_eur);
-		$size_eur = str_replace("cm","",$size_eur);
-		$size_eur = trim($size_eur);
-
     	$size_usa = $cartiglio_array[0]['Tgl_USA'];
-    	$size_usa = str_replace("ANNI","",$size_usa);
-		$size_usa = str_replace("Y","",$size_usa);
-		$size_usa = str_replace("A","",$size_usa);
-		$size_usa = trim($size_usa);
 
     	// $printer_name = 'SBT-WP01';
-    	
     	$printed = 0;
-    	$qty_to_print = 1;
 
     	// Record Labels
 		try {
@@ -251,7 +244,7 @@ class ControllerCBlabel extends Controller {
 			$table->style = $style;
 			$table->color = $color;
 			$table->color_desc = $color_desc;
-
+			
 			$table->size_ita = $size_ita;
 			$table->size_eng = $size_eng;
 			$table->size_spa = $size_spa;
@@ -280,4 +273,6 @@ class ControllerCBlabel extends Controller {
 			
 		return Redirect::to('/');
 	}
+	
+
 }

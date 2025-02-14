@@ -5,23 +5,23 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">Find BB and print CB extra labels</div>
+                <div class="panel-heading">Choose bundle quantity?</div>
                 
-                {!! Form::open(['url' => 'searchinteos_store_extra']) !!}
+                {!! Form::open(['url' => 'bundle_qty']) !!}
                 <input type="hidden" name="_token" id="_token" value="<?php echo csrf_token(); ?>">
 
                  <div class="panel-body">
-                    <p>Location of Inteos:</p>
-                    {!! Form::select('inteosdb_new', array('1'=>'Subotica','2'=>'Kikinda'), $inteosdb, array('class' => 'form-control')); !!} 
-                </div>
-                
-                <div class="panel-body">
-                    <p>BlueBox:</p>
-                    {!! Form::input('number', 'bb_code', null, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+                    <p>Bundle quantity:</p>
+                    {!! Form::input('number', 'bundleqty', $bundleqty, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
                 </div>
 
                 <div class="panel-body">
-                    {!! Form::submit('Find BB', ['class' => 'btn btn-primary btn-lg center-block']) !!}
+                    <p>Labels per bundle:</p>
+                    {!! Form::input('number', 'labels_per_bundle', $labels_per_bundle, ['class' => 'form-control', 'autofocus' => 'autofocus']) !!}
+                </div>
+                
+                <div class="panel-body">
+                    {!! Form::submit('Confirm', ['class' => 'btn btn-primary btn-lg center-block']) !!}
                 </div>
 
                 @include('errors.list')

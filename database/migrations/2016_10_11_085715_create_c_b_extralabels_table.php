@@ -20,16 +20,17 @@ class CreateCBExtralabelsTable extends Migration {
 			$table->string('bb_3')->nullable();
 
 			$table->string('bagno')->nullable();
+			$table->string('marker')->nullable();
 
 			$table->string('style');
 			$table->string('color');
 			$table->string('color_desc');
 
-			$table->string('size_ita');
-			$table->string('size_eng');
-			$table->string('size_spa');
-			$table->string('size_eur');
-			$table->string('size_usa');
+			$table->string('size_ita')->nullable();
+			$table->string('size_eng')->nullable();
+			$table->string('size_spa')->nullable();
+			$table->string('size_eur')->nullable();
+			$table->string('size_usa')->nullable();
 
 			$table->integer('qty_to_print');
 

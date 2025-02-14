@@ -26,7 +26,7 @@ class ControllerPackingList extends Controller {
 		$list_of_inbound = DB::connection('sqlsrv4')->select(DB::raw("SELECT 
   				DISTINCT [Document No_] as document
        
-  				FROM [Gordon_LIVE].[dbo].[GORDON\$Inbound Delivery Header]
+  				FROM [Gordon_test].[dbo].[GORDON\$Inbound Delivery Header]
   				WHERE [Status] = '0'"));
 
 		$list_of_inbound = (object) $list_of_inbound;
@@ -69,8 +69,8 @@ class ControllerPackingList extends Controller {
 		}
 		
 		$inbound = DB::connection('sqlsrv4')->select(DB::raw("SELECT *
-				FROM [Gordon_LIVE].[dbo].[GORDON\$Packing List]
-				WHERE [Document No_] = :somevariable"), array(
+				FROM [Gordon_test].[dbo].[GORDON\$Packing List]
+				WHERE [Document No_] = :somevariable ORDER BY [HU No_] asc"), array(
 			'somevariable' => $document,
 		));
 

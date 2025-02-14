@@ -25,12 +25,12 @@
 					</div>
 				</div>
 				<br><br><br>
-				<div class="panel-body">
+				<!-- <div class="panel-body">
 					<div class="">
 						<a href="{{url('/cblabel')}}" class="btn btn-success  center-block"><br>Skeniraj CartonBox i stampaj JEDNU CartonBox nalepnicu<br><br></a>
 					</div>
 				</div>
-				<br><br><br>
+				<br><br><br> -->
 			</div>
 		</div>
 	</div>

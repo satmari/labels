@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeLabels extends Migration {
+class ChangeBundletable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -13,9 +13,10 @@ class ChangeLabels extends Migration {
 	public function up()
 	{
 		//
-		// Schema::table('cb_labels', function ($table) {
-  //   		$table->renameColumn('qty','qty_to_print');
-		// });
+		 Schema::table('bundlelabels', function($table)
+		 {
+     		// $table->string('bagno')->nullable();
+		 });
 	}
 
 	/**
