@@ -83,6 +83,8 @@ Route::post('operator_print_multiple', 'ControllerOperator_import@operator_print
 Route::get('print_os', 'ControllerOS@index');
 Route::post('os_print', 'ControllerOS@os_print');
 
+Route::post('os_print_multiple', 'ControllerOS_import@os_print_multiple');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

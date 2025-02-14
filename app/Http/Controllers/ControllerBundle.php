@@ -237,7 +237,7 @@ class ControllerBundle extends Controller {
 			list($one, $two) = explode('-', $inteos_array[0]['BlueBoxNum']);
 			$po = $one;
 		} else {
-			$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);
+			$po = substr($inteos_array[0]['BlueBoxNum'], -10, 7);
 		}    	
 		// dd($po);
 
