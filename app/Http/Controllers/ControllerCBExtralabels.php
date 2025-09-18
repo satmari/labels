@@ -339,7 +339,8 @@ class ControllerCBExtralabels extends Controller {
 
 
 		} else {
-			$po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);			
+			// $po = substr($inteos_array[0]['BlueBoxNum'], -9, 6);	
+			$po = substr($inteos_array[0]['BlueBoxNum'], -10, 7);	
 			
 		}
 
@@ -567,10 +568,7 @@ class ControllerCBExtralabels extends Controller {
 			}
 
 		}
-
 		return Redirect::to('/');
 
 	}
-
-
 }
